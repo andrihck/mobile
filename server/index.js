@@ -1,9 +1,13 @@
 import Express from "express";
 import { criarTabelas, User  } from "./db.js";
 import bcryptjs from "bcryptjs";
+import jsonwebtoken from "jsonwebtoken"
+import cors from "cors"
 
 const app = Express()
+
 app.use(Express.json())
+app.use(cors())
 //criarTabelas()
 
  /*   const { nome, sobrenome, email, senha, dataNascimento} = req.body
@@ -37,7 +41,7 @@ app.post('/login', async (req, res) => {
     if(!email || !senha){
         res.send('voce deve preencher todos os campos')
         return
-    }
+}
     const userExiste = await User.findOne({where: {email:email}})
     if (!userExiste){
         res.send('Este usuario nao existe')
@@ -49,10 +53,25 @@ app.post('/login', async (req, res) => {
     return
   }
 
+  const token = jsonwebtoken.sign(
+    {
+        "nome-completo": '${userExiste.nome} ${userExiste.sobrenome}',
+        "email": userExiste.email,
+        "status": userExiste.status
+
+    },
+    'chavecriptografiajsonwebtoken',
+    {expiresIn: 1000*60*5}
+  )
+  console.log(token)
+
     //verificar se o usuario existe no banco de dados
     //comparar a senha do usuario com a senha salva no banco
     //criar um token de autenticação para este usuario
     //retornar a mensagem com o token
-    res.send('ok usuario logado')
+    res.send({
+        msg:"ok usuario logado",
+        tokenjsonwebtoken: token
+})
 })
 app.listen(8000)

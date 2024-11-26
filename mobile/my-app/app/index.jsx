@@ -1,122 +1,77 @@
-import { useState } from "react";
-import { View, Text, TextInput, Pressable, StyleSheet, SafeAreaView } from "react-native";
+import { View, StyleSheet, Image} from 'react-native';
+import {Link} from 'expo-router';
 
-const style = StyleSheet.create({
-    input: {
-        width: '100%',
-        margin: 5,
-        backgroundColor: '#799fbf',
-        borderRadius: '15px',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        padding: 5
-        
-    },
-    container: {
-        alignItems: 'center',
-        justifyContent:'center',
-        backgroundColor:'#799fbf',
-        flex: 1
-    },
 
-    button:{
-        justifyContent: 'center',
-        margin:15,
-        alignItems:'center',
-        color:'grey',
-        paddingHorizontal: 12,
-        paddingVertical: 6,
-        backgroundColor: 'black',
-        borderRadius: 15
-    },
-    titulo:{
-        fontSize: 49,
-        fontFamily: 'Times New Roman',
-        fontWeight:'760',
 
-    },
-    box:{
-        shadowOpacity: 0.30,  
-        shadowRadius: 9, 
-        padding: 50,
-        backgroundColor:'white',
-        justifyContent: 'center',
-    
-       },
+export default function App() {
 
-       botaotexto:{
-        color:'white',
-        alignItems:'center',
-        justifyContent:'center'
-       }
+const logoSpotify =
 
-})
-
-export default SinUp = () => {
-    //const email = ''
-
-    const [email, setEmail] = useState('')
-    const [nome, setNome] = useState('')
-    const [senha, setSenha] = useState('')
-
-    const registrarUsuario = async function () {
-        if (!nome || !email || !senha) {
-            console.log('os parametros nome, email e senha devem ser fornecidos')
-            return
-        }
-        const resposta = await fetch('https://taskhub-s37f.onrender.com/auth/signup',{
-            method: 'POST',
-            headers: {
-            Accept: 'application/json',
-            'Content-type': 'application/json',
-        },
-            body: JSON.stringify({ name: nome, email: email, password: senha })
-        })
-        
-    if (!resposta) {
-        console.log('erro')
-    } else if (resposta.status == 200) {
-        console.log('user criado com sucesso')
-    } else {
-        console.log('ocorreu um erro')
-    }
-}
+''
 
 return (
-    <SafeAreaView style={style.container}>
-        <View style={style.box}>
-        <View >
-            <Text style={style.titulo}>Registre-se</Text>
-        </View>
-        <View style={style.inputView}>
-            <TextInput
-                style={style.input}
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-                placeholder="Digite seu email zika"
-            />
-            <TextInput
-                style={style.input}
-                onChangeText={(text) => setNome(text)}
-                value={nome}
-                placeholder="Seu nome animal"
-            /><TextInput
-                style={style.input}
-                onChangeText={(text) => setSenha(text)}
-                value={senha}
-                placeholder="Sua senha segura"
-                secureTextEntry={true}
-            />
+    <View style={styles.container}>
+      <View style={styles.box}>
 
-            <View style={style.button} >
-                <Pressable onPress={registrarUsuario}>
-                    <Text style={style.botaotexto}>Cadastrar</Text>
-                </Pressable>
-            </View>
-</View>
-        </View>
-    </SafeAreaView>
+      <Image style= {styles.logo} source={require('./img/logo.webp')} /> 
+      
+      <Image
+        style={styles.logo}
+        source={{
+          uri : logoSpotify,
+        }}
+      />
+      <Link style={styles.log} href= "/login">Faça seu login</Link>
 
-)
+      <Link style={styles.log} href= "/cadastro">Crie sua conta</Link>
+      </View>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+    container:{
+      flex: 1,
+      alignItems: 'center',
+      backgroundColor:'#083757',
+      justifyContent: 'center',
+    },
+    background:{
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+    },
+    logo:{
+      width: 100,
+      height: 100,
+      alignItems:'center',
+      justifyContent:'center'
+    },
+
+    log:{
+      flex: 1,
+      color:"#ffff",
+      alignItems: 'center',
+      backgroundColor: '#083757',
+      borderRadius: 20,
+      padding: 10,
+      margin: 10,
+      width: '50%'
+    },
+  box: {
+      width: "100%",
+      maxWidth: 400,
+      backgroundColor: "#7195ad",
+      borderRadius: 15,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 6,
+      elevation: 4,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+  },
+  });
